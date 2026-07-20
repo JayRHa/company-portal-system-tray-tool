@@ -1,90 +1,56 @@
-<!-- unified-readme:start -->
+<!-- jr-brand:start -->
 <div align="center">
-
-# Company Portal System Tray Tool
-
-**A few weeks ago I released the Company Portal System Tray tool. The posts have a very good feedback and the tool was tested by some and also used productively. I have been working on developing the tool further and integrating more useful functions that can help with troubleshooting. The first version of the Company Portal system tray icon has many quick access possibilities to system tools or logs that are important for troubleshooting an Intune managed device. In addition, this tool has a quick access to open the Company Portal.**
-
-Build. Automate. Share.
-
-[![GitHub stars](https://img.shields.io/github/stars/JayRHa/CompanyPortalSystemTrayTool?style=for-the-badge&logo=github&color=f4c542)](https://github.com/JayRHa/CompanyPortalSystemTrayTool/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/JayRHa/CompanyPortalSystemTrayTool?style=for-the-badge&logo=github&color=4078c0)](https://github.com/JayRHa/CompanyPortalSystemTrayTool/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/JayRHa/CompanyPortalSystemTrayTool?style=for-the-badge&logo=github&color=d73a4a)](https://github.com/JayRHa/CompanyPortalSystemTrayTool/issues)
-[![Contributors](https://img.shields.io/github/contributors/JayRHa/CompanyPortalSystemTrayTool?style=for-the-badge&logo=github&color=28a745)](https://github.com/JayRHa/CompanyPortalSystemTrayTool/graphs/contributors)
-
-In this blog I want to introduce the new version of the Tool.
-![Tool View](https://github.com/JayRHa/CompanyPortalSystemTrayTool/blob/main/assets/tooloverview.png)
-
-<p>
-  <a href="https://jannikreinhard.com/">Blog</a> ·
-  <a href="https://www.linkedin.com/in/jannik-r/">LinkedIn</a> ·
-  <a href="https://x.com/jannik_reinhard">X</a>
+  <a href="https://jannikreinhard.com/">
+    <img src="https://raw.githubusercontent.com/JayRHa/.github/main/assets/readme/tool.svg" alt="Jannik Reinhard — AI, Cloud and Endpoint Management" width="100%">
+  </a>
+  <h1>Company Portal System Tray Tool</h1>
+  <p><strong>System tray tool that extends Intune Company Portal with quick-access device management actions.</strong></p>
+  <p>
+  <a href="https://jannikreinhard.com/"><img src="https://img.shields.io/badge/Website-0A5FC0?style=flat-square&amp;logo=wordpress&amp;logoColor=white" alt="Website"></a>
+  <a href="https://github.com/JayRHa"><img src="https://img.shields.io/badge/GitHub-081427?style=flat-square&amp;logo=github&amp;logoColor=white" alt="GitHub"></a>
+  <a href="https://www.linkedin.com/in/jannik-r/"><img src="https://img.shields.io/badge/LinkedIn-0795FF?style=flat-square&amp;logo=linkedin&amp;logoColor=white" alt="LinkedIn"></a>
+  <a href="https://x.com/jannik_reinhard"><img src="https://img.shields.io/badge/X-081427?style=flat-square&amp;logo=x&amp;logoColor=white" alt="X"></a>
+  <a href="https://www.youtube.com/@ModernDevMgmt/featured"><img src="https://img.shields.io/badge/YouTube-0A5FC0?style=flat-square&amp;logo=youtube&amp;logoColor=white" alt="YouTube"></a>
 </p>
-
----
-
-`Endpoint Helper` | `PowerShell` | `Public` | `Maintained`
-
+  <p><sub>Tool · App · CLI · PowerShell · Practical by design</sub></p>
 </div>
+<!-- jr-brand:end -->
 
-## What is this?
+## Overview
 
-Company Portal System Tray Tool helps endpoint administrators surface actions, alerts, or helper workflows closer to the device or admin process.
+This Windows system tray tool gives users quick access to common Microsoft Intune and support actions without opening several portals or applications.
 
-## Project Context
-
-- Use it when endpoint state should trigger a visible notification, shortcut, or admin action.
-- The project bridges local device context with management workflows.
-- This repository is maintained as a practical project and reference asset.
-
-## How It Works
-
-Device or admin signals are collected, evaluated against the workflow logic, then surfaced as notifications, tray actions, or follow-up tasks.
-
-```mermaid
-flowchart LR
-    Signal[Device or admin signal] --> Logic[Workflow logic]
-    Logic --> Action[Notification or quick action]
-    Action --> Admin[Admin or user]
-    Admin --> FollowUp[Follow-up action]
-    FollowUp --> Signal
-```
-
-## Quick Start
-
-1. Review the project context and workflow below.
-2. Clone the repository:
-
-   ```bash
-   git clone https://github.com/JayRHa/CompanyPortalSystemTrayTool.git
-   ```
-
-3. Continue with the setup, usage, or workflow sections below.
-
----
-<!-- unified-readme:end -->
+![Company Portal system tray overview](assets/tooloverview.png)
 
 ## Features
-### Sync device
 
-![Features](https://github.com/JayRHa/CompanyPortalSystemTrayTool/blob/main/assets/syncDevice.png)
+| Action | What It Does |
+| --- | --- |
+| Sync Device | Starts a device sync with Microsoft Intune |
+| Company Portal | Opens the Company Portal |
+| Quick Assist | Starts Microsoft's remote support tool |
+| Troubleshoot | Opens the included troubleshooting workflow |
+| System Info | Shows useful device information |
+| Change Password | Opens the password change experience |
 
-### Open Company Portal
+## Deployment
 
-![Features](https://github.com/JayRHa/CompanyPortalSystemTrayTool/blob/main/assets/companyPortal.png)
+The repository includes a ready-to-upload `install.intunewin` package. You can also review or adapt the installation source in `sources/`.
 
-### Open Quick Assist
+Test the package with a limited Microsoft Intune assignment before deploying it to all users.
 
-![Features](https://github.com/JayRHa/CompanyPortalSystemTrayTool/blob/main/assets/quickAssist.png)
+## License
 
-### Troubleshoot
+This project is available under the terms in [LICENSE](LICENSE).
 
-![Features](https://github.com/JayRHa/CompanyPortalSystemTrayTool/blob/main/assets/troubleshoot.png)
+<!-- jr-brand-footer:start -->
 
-### System Info
+---
 
-![Features](https://github.com/JayRHa/CompanyPortalSystemTrayTool/blob/main/assets/systemInfo.png)
+<div align="center">
+  <p><sub>Built and maintained by <a href="https://jannikreinhard.com/">Jannik Reinhard</a> · Microsoft MVP for Security and AI Platform.</sub></p>
+  <p><a href="https://www.buymeacoffee.com/jannikreinf">Support the open-source work</a></p>
+  <p><strong>Stay healthy, Cheers Jannik</strong></p>
+</div>
 
-### Change Password
-
-![Features](https://github.com/JayRHa/CompanyPortalSystemTrayTool/blob/main/assets/changePassword.png)
+<!-- jr-brand-footer:end -->
