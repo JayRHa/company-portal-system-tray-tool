@@ -1,0 +1,67 @@
+name: Validate tray tool
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Parse PowerShell
+        shell: pwsh
+        run: |
+          $errors = @()
+          Get-ChildItem -Recurse -Include *.ps1,*.psm1 | ForEach-Object {
+            $tokens = $null
+            $parseErrors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$parseErrors) > $null
+            $errors += $parseErrors
+          }
+          if ($errors.Count -gt 0) {
+            $errors | Format-List
+            exit 1
+          }
+      - name: Run helper regression tests
+        shell: pwsh
+        run: ./tests/SystemInfo.Tests.ps1
+      - name: Validate scheduled task XML
+        shell: pwsh
+        run: |
+          [xml]$task = Get-Content ./sources/StartCompanyPortalSystemtray-v2.xml -Raw
+          $namespace = New-Object System.Xml.XmlNamespaceManager($task.NameTable)
+          $namespace.AddNamespace('t', 'http://schemas.microsoft.com/windows/2004/02/mit/task')
+          $arguments = $task.SelectSingleNode('//t:Exec/t:Arguments', $namespace).InnerText
+          if ($arguments -notmatch '-ExecutionPolicy Bypass' -or $arguments -notmatch '-File') {
+            throw "Scheduled task PowerShell arguments are unsafe: $arguments"
+          }
+
+  package:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - name: Download Microsoft Win32 Content Prep Tool
+        shell: pwsh
+        run: |
+          Invoke-WebRequest `
+            -Uri 'https://raw.githubusercontent.com/microsoft/Microsoft-Win32-Content-Prep-Tool/v1.8.7/IntuneWinAppUtil.exe' `
+            -OutFile './IntuneWinAppUtil.exe'
+      - name: Build Intune package
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path './package-output' -Force | Out-Null
+          & './IntuneWinAppUtil.exe' -c './sources' -s 'install.bat' -o './package-output' -q
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - uses: actions/upload-artifact@v7
+        with:
+          name: CompanyPortalSystemTrayTool-intunewin
+          path: package-output/install.intunewin
+          if-no-files-found: error

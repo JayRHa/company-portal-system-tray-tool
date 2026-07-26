@@ -15,6 +15,7 @@ Inspiration:
 ##################### Start #####################
 #################################################
 $iconPath = ($PSScriptRoot + "\icons")
+Import-Module "$PSScriptRoot\SystemInfo.psm1" -Force
 
 # Load Assemblies
 Add-Type -AssemblyName System.Windows.Forms
@@ -149,7 +150,7 @@ $buttonSystemInfo.DropDownItems.Add($buttonSystemInfoHostname)
 
 # IP address
 $buttonSystemInfoIp = New-Object System.Windows.Forms.ToolStripMenuItem
-$ip = (Get-WmiObject -class "Win32_NetworkAdapterConfiguration"  | Where {$_.IPEnabled -Match "True"} | Sort-Object index -uniqu)[0].IPAddress[0]
+$ip = Get-PrimaryIPv4Address
 $buttonSystemInfoIp.Text = ("IP: $ip")
 $buttonSystemInfoIp.Image = [System.Drawing.Bitmap]::FromFile("$iconPath\sysInfo.png")
 $buttonSystemInfo.DropDownItems.Add($buttonSystemInfoIp)
@@ -169,7 +170,7 @@ $buttonSystemInfo.DropDownItems.Add($buttonSystemInfoUptime)
 
 # Last Update installation
 $buttonSystemLastUpdateInstallation = New-Object System.Windows.Forms.ToolStripMenuItem
-$lastUpdateInstallation = (( gwmi win32_quickfixengineering |sort installedon -desc )[0].InstalledOn).ToString("yyyy.MM.dd hh:mm")
+$lastUpdateInstallation = Get-LastUpdateInstallation
 $buttonSystemLastUpdateInstallation.Text = ("Last update installation: $lastUpdateInstallation")
 $buttonSystemLastUpdateInstallation.Image = [System.Drawing.Bitmap]::FromFile("$iconPath\sysInfo.png")
 $buttonSystemInfo.DropDownItems.Add($buttonSystemLastUpdateInstallation)
@@ -183,7 +184,7 @@ $buttonSystemInfo.DropDownItems.Add($buttonSystemInfoEnrollment)
 
 # Device Ownership
 $buttonSystemInfoDeviceOwnerShip = New-Object System.Windows.Forms.ToolStripMenuItem
-$enrollment = switch(Get-ItemPropertyValue -Path HKLM:\SOFTWARE\Microsoft\Enrollments\Ownership -Name CorpOwned -ErrorAction SilentlyContinue){0{retun "Personal"}1{"Corporate"}$null{"Unkonw"}}
+$enrollment = switch(Get-ItemPropertyValue -Path HKLM:\SOFTWARE\Microsoft\Enrollments\Ownership -Name CorpOwned -ErrorAction SilentlyContinue){0{"Personal"}1{"Corporate"}$null{"Unknown"}default{"Unknown"}}
 $buttonSystemInfoDeviceOwnerShip.Text = ("Device ownership: $enrollment")
 $buttonSystemInfoDeviceOwnerShip.Image = [System.Drawing.Bitmap]::FromFile("$iconPath\sysInfo.png")
 $buttonSystemInfo.DropDownItems.Add($buttonSystemInfoDeviceOwnerShip)
