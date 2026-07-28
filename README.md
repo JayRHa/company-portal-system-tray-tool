@@ -1,7 +1,7 @@
 <!-- jr-brand:start -->
 <div align="center">
   <a href="https://jannikreinhard.com/">
-    <img src="https://raw.githubusercontent.com/JayRHa/.github/main/assets/readme/tool.svg" alt="Jannik Reinhard — Driving AI with passion" width="100%">
+    <img src="https://raw.githubusercontent.com/JayRHa/.github/main/assets/readme/brand-header.png" alt="Jannik Reinhard — Driving AI with passion" width="100%">
   </a>
   <h1>Company Portal System Tray Tool</h1>
   <p><strong>System tray tool that extends Intune Company Portal with quick-access device management actions.</strong></p>
